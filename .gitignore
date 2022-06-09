@@ -1,0 +1,6 @@
+# Default ignored files
+.git/
+.idea/
+cmake-build-debug/
+cmake-build-release/
+cmake-build-web/
