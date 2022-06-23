@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.15)
-project(DoltLib)
-set(CMAKE_CXX_STANDARD 14)
+project(DoltLib C)
+set(CMAKE_C_STANDARD 11)
 
 # Variables
 set(DOLT_STATIC_LIBRARY_NAME doltlib.a)
@@ -9,7 +9,7 @@ set(DOLT_STATIC_LIBRARY_NAME doltlib.a)
 include(FetchContent)
 FetchContent_Declare(dolt
     GIT_REPOSITORY https://github.com/dolthub/dolt.git
-    GIT_TAG d572b6bfbe37b845dba9aca06aa9b9a3ecec7058
+    GIT_TAG cca9e426f291ca5b1991a1b64428b8ba38e80013
 )
 FetchContent_MakeAvailable(dolt)
 find_program(GOLANG_BINARY "go")
@@ -18,7 +18,7 @@ IF(NOT GOLANG_BINARY)
     message(FATAL_ERROR "Cannot find the \"go\" binary, please install it and add it to PATH")
 ENDIF()
 execute_process(COMMAND ${GOLANG_BINARY} build -o ${dolt_BINARY_DIR}/${DOLT_STATIC_LIBRARY_NAME} -buildmode=c-archive .
-    WORKING_DIRECTORY ${dolt_SOURCE_DIR}/go/cmd/dolt)
+    WORKING_DIRECTORY ${dolt_SOURCE_DIR}/go/cmd/dolt/export)
 add_library(DOLT_STATIC_LIBRARY STATIC IMPORTED)
 set_target_properties(DOLT_STATIC_LIBRARY PROPERTIES IMPORTED_LOCATION ${dolt_BINARY_DIR}/${DOLT_STATIC_LIBRARY_NAME})
 
